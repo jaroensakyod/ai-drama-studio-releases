@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Drama Studio — ดาวน์โหลด</title>
+<meta name="description" content="ดาวน์โหลด AI Drama Studio เวอร์ชันล่าสุด — เขียนบท ทำรูป ทำคลิปละครสั้นอัตโนมัติบนมือถือ">
+<link rel="icon" href="icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f5fb; --card: #ffffff; --fg: #17151f; --muted: #6e6a80; --line: #e6e3f0;
+    --accent: #7c4dff; --grad: linear-gradient(135deg, #7c4dff 0%, #b347f5 50%, #ec4899 100%);
+    --shadow: 0 1px 2px rgba(23, 21, 31, .04), 0 10px 30px rgba(80, 60, 160, .10);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0d0b14; --card: #15131f; --fg: #ecebf4; --muted: #9b97ad; --line: #262236;
+      --shadow: 0 10px 30px rgba(0, 0, 0, .35); }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 "Noto Sans Thai", "Leelawadee UI", sans-serif; }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 0 16px 48px; }
+  header { text-align: center; padding: 48px 0 28px; }
+  header img { width: 96px; height: 96px; border-radius: 24px; box-shadow: 0 12px 40px rgba(124, 77, 255, .35); }
+  h1 { margin: 16px 0 4px; font-size: 32px; font-weight: 800; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .tag { color: var(--muted); margin: 0; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 20px; margin: 16px 0; box-shadow: var(--shadow); }
+  .btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 16px; border-radius: 14px;
+    font: 700 18px/1.2 inherit; text-decoration: none; border: 1px solid var(--line); color: var(--fg); background: var(--card); }
+  .btn.main { background: var(--grad); color: #fff; border: 0; font-size: 20px; padding: 20px; box-shadow: 0 10px 28px rgba(124, 77, 255, .35); }
+  .btn + .btn { margin-top: 10px; }
+  .ver { text-align: center; color: var(--muted); font-size: 14px; margin: 10px 0 0; }
+  .new { margin: 12px 0 0; padding: 10px 14px; border-radius: 12px; background: rgba(124, 77, 255, .08); font-size: 15px; }
+  .new:empty { display: none; }
+  h2 { font-size: 20px; margin: 0 0 12px; }
+  ol { margin: 0; padding: 0; list-style: none; counter-reset: s; }
+  ol li { counter-increment: s; position: relative; padding: 0 0 14px 44px; }
+  ol li::before { content: counter(s); position: absolute; left: 0; top: 0; width: 30px; height: 30px; border-radius: 50%;
+    background: var(--grad); color: #fff; font-weight: 800; display: grid; place-items: center; font-size: 15px; }
+  ol li b { display: block; }
+  .muted { color: var(--muted); font-size: 14px; }
+  footer { text-align: center; color: var(--muted); font-size: 13px; margin-top: 28px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="icon.png" alt="">
+    <h1>AI Drama Studio</h1>
+    <p class="tag">เขียนบท → ทำรูป → ทำคลิป → ปก อัตโนมัติ บนมือถือ</p>
+  </header>
+
+  <div class="card">
+    <a id="apk" class="btn main" href="https://github.com/jaroensakyod/ai-drama-studio-releases/releases/latest">📱 ดาวน์โหลดแอป Android</a>
+    <p id="ver" class="ver">กำลังดูเวอร์ชันล่าสุด ...</p>
+    <div id="notes" class="new"></div>
+  </div>
+
+  <div class="card">
+    <h2>วิธีติดตั้ง</h2>
+    <ol>
+      <li><b>ดาวน์โหลดไฟล์ .apk</b><span class="muted">กดปุ่มด้านบนจากมือถือ Android</span></li>
+      <li><b>เปิดไฟล์แล้วกดติดตั้ง</b><span class="muted">ถ้ามือถือถาม ให้อนุญาต "ติดตั้งแอปที่ไม่รู้จัก" สำหรับเบราว์เซอร์ที่ใช้โหลด</span></li>
+      <li><b>เปิดแอป แล้วส่งรหัสเครื่องมาขอ license</b><span class="muted">หน้าแรกของแอปมีปุ่ม 💬 กดแล้วรหัสเครื่องถูกคัดลอกให้ วางส่งในแชทได้เลย</span></li>
+      <li><b>วางรหัส license แล้วทำตามหน้าตั้งค่าในแอป</b><span class="muted">ติดตั้ง Meta AI (หรือ Dola) ล็อกอิน และเปิดสิทธิ์ Accessibility ตามที่แอปบอกทีละขั้น</span></li>
+    </ol>
+    <p class="muted" style="margin:0">อัปเดตเวอร์ชันใหม่: ดาวน์โหลดแล้วติดตั้งทับได้เลย license และงานเดิมยังอยู่ครบ</p>
+  </div>
+
+  <div class="card">
+    <a class="btn main" href="https://www.facebook.com/k12312121/" target="_blank" rel="noopener">💬 ขอ / ต่ออายุ license</a>
+  </div>
+
+  <footer>© AI Drama Studio · ใช้กับบัญชี AI ของคุณเอง ตามข้อกำหนดของแต่ละบริการ</footer>
+</div>
+<script>
+  // latest.json is written by tools/release.sh: version, download URL and notes
+  fetch('latest.json?t=' + Date.now(), { cache: 'no-store' })
+    .then((r) => r.json())
+    .then((j) => {
+      if (j.android?.url) document.getElementById('apk').href = j.android.url;
+      document.getElementById('ver').textContent = `เวอร์ชัน ${j.android?.version || '-'}` + (j.released ? ` · ออกเมื่อ ${j.released}` : '');
+      if (j.android?.notes) document.getElementById('notes').textContent = '🆕 ' + j.android.notes;
+    })
+    .catch(() => { document.getElementById('ver').textContent = 'ดูทุกเวอร์ชันได้ที่หน้าดาวน์โหลด'; });
+</script>
+</body>
+</html>
