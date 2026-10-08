@@ -52,7 +52,7 @@
   </header>
 
   <div class="card">
-    <a id="apk" class="btn main" href="https://github.com/jaroensakyod/ai-drama-studio-releases/releases/latest">📱 ดาวน์โหลดแอป Android</a>
+    <a id="apk" class="btn main" href="#">📱 ดาวน์โหลดแอป Android</a>
     <p id="ver" class="ver">กำลังดูเวอร์ชันล่าสุด ...</p>
     <div id="notes" class="new"></div>
   </div>
@@ -83,7 +83,9 @@
       document.getElementById('ver').textContent = `เวอร์ชัน ${j.android?.version || '-'}` + (j.released ? ` · ออกเมื่อ ${j.released}` : '');
       if (j.android?.notes) document.getElementById('notes').textContent = '🆕 ' + j.android.notes;
     })
-    .catch(() => { document.getElementById('ver').textContent = 'ดูทุกเวอร์ชันได้ที่หน้าดาวน์โหลด'; });
+    .catch(() => { document.getElementById('ver').textContent = 'โหลดข้อมูลเวอร์ชันไม่ได้ — ลองรีเฟรชหน้านี้'; });
+  // never fall back to the repo page: the button only works once the .apk link is known
+  document.getElementById('apk').addEventListener('click', (e) => { if (e.currentTarget.getAttribute('href') === '#') e.preventDefault(); });
 </script>
 </body>
 </html>
