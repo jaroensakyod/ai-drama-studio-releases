@@ -1,9 +1,9 @@
 {
   "android": {
-    "version": "3.3.0",
-    "code": 30300,
-    "url": "https://github.com/jaroensakyod/ai-drama-studio-releases/releases/download/v3.3.0/AI-Drama-Studio-3.3.0.apk",
-    "notes": "เลือกใช้ Dola ทำรูปและคลิปได้ · แจ้งเมื่อโควตาหมด · เตือนก่อน license หมดอายุ · ปุ่มติดต่อต่ออายุ · จัดปุ่มด้านล่างใหม่"
+    "version": "3.4.0",
+    "code": 30400,
+    "url": "https://github.com/jaroensakyod/ai-drama-studio-releases/releases/download/v3.4.0/AI-Drama-Studio-3.4.0.apk",
+    "notes": "Smoother cuts: start and end pose for every shot"
   },
   "released": "2026-10-08"
 }
