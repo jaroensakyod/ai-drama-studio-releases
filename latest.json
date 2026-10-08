@@ -5,10 +5,5 @@
     "url": "https://github.com/jaroensakyod/ai-drama-studio-releases/releases/download/v3.3.0/AI-Drama-Studio-3.3.0.apk",
     "notes": "เลือกใช้ Dola ทำรูปและคลิปได้ · แจ้งเมื่อโควตาหมด · เตือนก่อน license หมดอายุ · ปุ่มติดต่อต่ออายุ · จัดปุ่มด้านล่างใหม่"
   },
-  "extension": {
-    "version": "0.10.0",
-    "url": "https://github.com/jaroensakyod/ai-drama-studio-releases/releases/download/v3.3.0/AI-Drama-Studio-extension-0.10.0.zip",
-    "notes": "เลือกใช้ Dola ทำรูปและคลิปได้ · แจ้งเมื่อโควตาหมด · เตือนก่อน license หมดอายุ · ปุ่มติดต่อต่ออายุ · จัดปุ่มด้านล่างใหม่"
-  },
   "released": "2026-10-08"
 }
