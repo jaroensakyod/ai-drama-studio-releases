@@ -1,14 +1,14 @@
 {
   "android": {
-    "version": "3.2.0",
-    "code": 30200,
-    "url": "https://github.com/jaroensakyod/ai-drama-studio-releases/releases/download/v3.2.0/AI-Drama-Studio-3.2.0.apk",
-    "notes": "ปกทำใน Meta AI พร้อมชื่อเรื่อง · ปุ่มทำอัตโนมัติจนจบ · ปุ่มเช็กอัปเดต"
+    "version": "3.3.0",
+    "code": 30300,
+    "url": "https://github.com/jaroensakyod/ai-drama-studio-releases/releases/download/v3.3.0/AI-Drama-Studio-3.3.0.apk",
+    "notes": "เลือกใช้ Dola ทำรปและคลิปได้ และจัดปุ่มด้านล่างใหม่"
   },
   "extension": {
     "version": "0.10.0",
-    "url": "https://github.com/jaroensakyod/ai-drama-studio-releases/releases/download/v3.2.0/AI-Drama-Studio-extension-0.10.0.zip",
-    "notes": "ปกทำใน Meta AI พร้อมชื่อเรื่อง · ปุ่มทำอัตโนมัติจนจบ · ปุ่มเช็กอัปเดต"
+    "url": "https://github.com/jaroensakyod/ai-drama-studio-releases/releases/download/v3.3.0/AI-Drama-Studio-extension-0.10.0.zip",
+    "notes": "เลือกใช้ Dola ทำรปและคลิปได้ และจัดปุ่มด้านล่างใหม่"
   },
   "released": "2026-10-08"
 }
