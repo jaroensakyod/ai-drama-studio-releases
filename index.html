@@ -40,6 +40,18 @@
     background: var(--grad); color: #fff; font-weight: 800; display: grid; place-items: center; font-size: 15px; }
   ol li b { display: block; }
   .muted { color: var(--muted); font-size: 14px; }
+  h3 { font-size: 16px; margin: 18px 0 10px; }
+  h3 small { font-weight: 400; }
+  .plans { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .plans.three { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 480px) { .plans.three { grid-template-columns: 1fr; } }
+  .plan { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2px;
+    padding: 14px 10px; border: 1px solid var(--line); border-radius: 14px; }
+  .plan .price { font-size: 26px; font-weight: 800; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .plan .muted { font-size: 13px; line-height: 1.5; }
+  .plan.hot { border: 2px solid var(--accent); box-shadow: 0 8px 24px rgba(124, 77, 255, .25); }
+  .badge { position: absolute; top: -11px; padding: 1px 10px; border-radius: 999px; background: var(--grad); color: #fff; font-size: 12px; font-weight: 700; }
+  .need.small { margin-top: 14px; font-size: 14px; color: var(--muted); }
   .warn { border-color: rgba(245, 158, 11, .55); }
   .need { margin: 0; padding-left: 20px; }
   .need li { margin-bottom: 8px; }
@@ -95,8 +107,32 @@
     <p class="muted" style="margin:0">อัปเดตเวอร์ชันใหม่: ดาวน์โหลดแล้วติดตั้งทับได้เลย (ปิด Play Protect ก่อนเหมือนเดิม) license และงานเดิมยังอยู่ครบ</p>
   </div>
 
+  <div class="card" id="price">
+    <h2>💰 ราคา</h2>
+    <p class="muted">ใช้ AI ฟรีของ Meta AI / ChatGPT ด้วยบัญชีของคุณเอง — <b>ไม่ต้องจ่ายค่า AI หรือ API เพิ่ม</b> จ่ายแค่ค่าแอปตามแพ็กเกจ</p>
+    <h3>แบบเช่าใช้ <small class="muted">— ครบ 3 โหมด (ละคร · การ์ตูน · ขายของ) อัปเดตตลอดช่วงที่ใช้</small></h3>
+    <div class="plans">
+      <div class="plan"><b>🆓 ทดลอง</b><span class="price">ฟรี</span><span class="muted">3 วัน · เครื่องละครั้ง</span></div>
+      <div class="plan"><b>⚡ 7 วัน</b><span class="price">฿99</span><span class="muted">ลองทำจริง 1 เรื่อง</span></div>
+      <div class="plan"><b>📅 1 เดือน</b><span class="price">฿290</span><span class="muted">ทำต่อเนื่อง</span></div>
+      <div class="plan"><b>📅 3 เดือน</b><span class="price">฿690</span><span class="muted">เฉลี่ย ฿230/เดือน</span></div>
+    </div>
+    <h3>แบบซื้อขาด <small class="muted">— จ่ายครั้งเดียว ใช้ได้ตลอด</small></h3>
+    <div class="plans three">
+      <div class="plan"><b>🥉 เริ่มต้น</b><span class="price">฿990</span><span class="muted">เลือก 1 โหมด<br>อัปเดต 6 เดือน<br>1 เครื่อง</span></div>
+      <div class="plan hot"><span class="badge">คุ้มที่สุด</span><b>🥈 มือโปร</b><span class="price">฿1,990</span><span class="muted">ครบ 3 โหมด<br>อัปเดต 12 เดือน<br>1 เครื่อง</span></div>
+      <div class="plan"><b>🥇 ตลอดชีพ</b><span class="price">฿3,990</span><span class="muted">ครบ 3 โหมด<br>อัปเดตตลอดอายุผลิตภัณฑ์ รวมฟีเจอร์ใหม่<br>2 เครื่อง</span></div>
+    </div>
+    <ul class="need small">
+      <li>อัปเดตหมดแล้ว แอปยังใช้งานได้ตามเดิม · ต่ออัปเดต ฿490/ปี (เริ่มต้น) · ฿790/ปี (มือโปร)</li>
+      <li>ย้ายเครื่อง (มือถือพัง/เปลี่ยนเครื่อง) ฟรีปีละ 1 ครั้ง (ตลอดชีพ ปีละ 2 ครั้ง) · ครั้งต่อไป ฿199</li>
+      <li>1 license ใช้ได้กับเครื่องที่ลงทะเบียนเท่านั้น ห้ามแชร์หรือขายต่อ</li>
+    </ul>
+  </div>
+
   <div class="card">
-    <a class="btn main" href="https://www.facebook.com/k12312121/" target="_blank" rel="noopener">💬 ขอ / ต่ออายุ license</a>
+    <a class="btn main" href="https://www.facebook.com/k12312121/" target="_blank" rel="noopener">💬 ขอทดลองฟรี / ซื้อ / ต่ออายุ license</a>
+    <p class="muted" style="margin:10px 0 0;text-align:center">ส่งรหัสเครื่อง (หน้าแรกของแอป) มาในแชท แล้วแจ้งแพ็กเกจที่ต้องการ</p>
   </div>
 
   <footer>© AI Drama Studio · ใช้กับบัญชี AI ของคุณเอง ตามข้อกำหนดของแต่ละบริการ</footer>
