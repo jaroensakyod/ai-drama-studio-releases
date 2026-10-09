@@ -1,9 +1,9 @@
 {
   "android": {
-    "version": "3.5.0",
-    "code": 30500,
-    "url": "https://github.com/jaroensakyod/ai-drama-studio-releases/releases/download/v3.5.0/AI-Drama-Studio-3.5.0.apk",
-    "notes": "หน้าข้อตกลงก่อนใช้งาน (ยอมรับครั้งเดียวต่อเวอร์ชัน) · สิทธิ์ Accessibility จำกัดเฉพาะแอป Meta AI ไม่เห็นแอปอื่น/แอปธนาคาร · ปุ่ม ไปตั้งค่า พาไปหน้าการเข้าถึงตรงๆ · วิธีแก้ แอปถูกปฏิเสธไม่ให้เข้าถึง (การตั้งค่าที่จำกัด) · หลังอัปเดตต้องเปิดสวิตช์ Accessibility ใหม่ 1 ครั้ง"
+    "version": "3.6.0",
+    "code": 30600,
+    "url": "https://github.com/jaroensakyod/ai-drama-studio-releases/releases/download/v3.6.0/AI-Drama-Studio-3.6.0.apk",
+    "notes": "เขียนบท/ทำรูปด้วย ChatGPT ได้ (ติดลิมิตแล้วสลับไป Meta เอง) · คลิปพูดตรงบททุกคำ · ซับ .srt ทุกคลิปและทั้งตอน · การ์ด 🎨 เริ่มจากรูป อ่านสไตล์แล้วกรอกเรื่องให้ · แท็บ Storyboard · ทดลองฟรี 1 วันในแอป · Meta ติดลิมิตวันนี้ → คิวหยุดแล้วทำต่อพรุ่งนี้ · ใช้บนคอมผ่านโปรแกรมจำลองมือถือได้ · ต้องตั้งภาษาเครื่องเป็นไทย · หลังอัปเดตต้องเปิดสวิตช์ Accessibility ใหม่ 1 ครั้ง"
   },
   "released": "2026-10-09"
 }
