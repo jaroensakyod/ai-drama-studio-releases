@@ -40,6 +40,10 @@
     background: var(--grad); color: #fff; font-weight: 800; display: grid; place-items: center; font-size: 15px; }
   ol li b { display: block; }
   .muted { color: var(--muted); font-size: 14px; }
+  .warn { border-color: rgba(245, 158, 11, .55); }
+  .need { margin: 0; padding-left: 20px; }
+  .need li { margin-bottom: 8px; }
+  ol li .muted { display: block; }
   footer { text-align: center; color: var(--muted); font-size: 13px; margin-top: 28px; }
 </style>
 </head>
@@ -51,26 +55,43 @@
     <p class="tag">เขียนบท → ทำรูป → ทำคลิป → ปก อัตโนมัติ บนมือถือ</p>
   </header>
 
+  <div class="card warn">
+    <h2>⚠️ ก่อนเริ่ม ต้องเตรียม</h2>
+    <ul class="need">
+      <li><b>มือถือ Android เครื่องที่ไม่ได้ใช้งานประจำ</b> — แนะนำเครื่องสำรองที่<u>ไม่มีแอปธนาคาร แอปการเงิน หรือข้อมูลส่วนตัว</u> เพราะแอปนี้ต้องเปิดสิทธิ์ Accessibility และต้องวางเครื่องทิ้งไว้ให้ทำงานนานๆ (Android 8 ขึ้นไป)</li>
+      <li><b>บัญชี Facebook ที่ไม่ใช่บัญชีหลัก</b> สำหรับล็อกอินแอป Meta AI — การใช้งานแบบอัตโนมัติอาจทำให้บัญชีถูกจำกัดหรือระงับ ห้ามใช้บัญชีหลักที่มีเพจ/ร้านค้า/โฆษณา</li>
+      <li><b>(ถ้าจะใช้ ChatGPT)</b> บัญชี ChatGPT แยกต่างหาก ด้วยเหตุผลเดียวกัน</li>
+      <li><b>ใช้เบราว์เซอร์ Chrome</b> ดาวน์โหลด (เบราว์เซอร์บางตัว เช่น Brave อาจโหลดค้าง)</li>
+      <li>เสียบชาร์จ ต่อ Wi-Fi และวางเครื่องไว้ระหว่างให้แอปทำงาน</li>
+    </ul>
+  </div>
+
   <div class="card">
-    <a id="apk" class="btn main" href="#">📱 ดาวน์โหลดแอป Android</a>
+    <a id="apk" class="btn main" href="AI-Drama-Studio.apk" download>📱 ดาวน์โหลดแอป Android</a>
     <p id="ver" class="ver">กำลังดูเวอร์ชันล่าสุด ...</p>
     <div id="notes" class="new"></div>
   </div>
 
   <div class="card">
-    <h2>วิธีติดตั้ง</h2>
+    <h2>วิธีติดตั้ง (ทีละขั้น)</h2>
     <ol>
-      <li><b>ดาวน์โหลดไฟล์ .apk</b><span class="muted">กดปุ่มด้านบนจากมือถือ Android</span></li>
-      <li><b>เปิดไฟล์แล้วกดติดตั้ง</b><span class="muted">ถ้ามือถือถาม ให้อนุญาต "ติดตั้งแอปที่ไม่รู้จัก" สำหรับเบราว์เซอร์ที่ใช้โหลด</span></li>
-      <li><b>เปิดแอป แล้วส่งรหัสเครื่องมาขอ license</b><span class="muted">หน้าแรกของแอปมีปุ่ม 💬 กดแล้วรหัสเครื่องถูกคัดลอกให้ วางส่งในแชทได้เลย</span></li>
-      <li><b>วางรหัส license แล้วทำตามหน้าตั้งค่าในแอป</b><span class="muted">ติดตั้ง Meta AI ล็อกอิน และเปิดสิทธิ์ Accessibility ตามที่แอปบอกทีละขั้น</span></li>
+      <li><b>ปิด Play Protect ชั่วคราวก่อน</b><span class="muted">ถ้าไม่ปิด Google จะบล็อกการติดตั้ง ("แอปถูกบล็อกเพื่อปกป้องอุปกรณ์ของคุณ") เพราะแอปขอสิทธิ์ Accessibility<br>เปิดแอป <b>Play Store</b> → กด<b>รูปโปรไฟล์</b>มุมขวาบน → <b>Play Protect</b> → กด <b>⚙️</b> มุมขวาบน → ปิด <b>"สแกนแอปด้วย Play Protect"</b> → กดปิด (ไม่ต้องรอ ปิดแล้วติดตั้งได้ทันที)</span></li>
+      <li><b>กดปุ่ม "ดาวน์โหลดแอป Android" ด้านบน (ใน Chrome)</b><span class="muted">Chrome จะเตือน "ไฟล์อาจเป็นอันตราย" → กด <b>"ดาวน์โหลดต่อไป"</b> (เป็นคำเตือนปกติของไฟล์ .apk ทุกไฟล์) → รอจนขึ้น "ดาวน์โหลดเสร็จสมบูรณ์" → กด <b>"เปิด"</b><br>ถ้าแถบหายไปก่อน: Chrome → ⋮ มุมขวาบน → <b>ดาวน์โหลด</b> → กดไฟล์ AI-Drama-Studio</span></li>
+      <li><b>อนุญาตให้ Chrome ติดตั้งแอป (ครั้งแรกครั้งเดียว)</b><span class="muted">ขึ้นว่า "โทรศัพท์ของคุณไม่ได้รับอนุญาตให้ติดตั้งแอปที่ไม่รู้จักจากแหล่งที่มานี้" → กด <b>"การตั้งค่า"</b> → เปิดสวิตช์ <b>"อนุญาตจากแหล่งที่มานี้"</b> → กดย้อนกลับ → <u>กดไฟล์ในหน้าดาวน์โหลดอีกครั้ง</u></span></li>
+      <li><b>กด "ติดตั้ง"</b><span class="muted">มือถือบางยี่ห้อ (เช่น TECNO, Infinix, Xiaomi) จะขึ้นหน้าตรวจความปลอดภัยของตัวเอง เช่น "อาจมีความเสี่ยง" → รอปุ่มนับถอยหลังจบ แล้วกด <b>"เพิกเฉย"</b> / "ติดตั้งต่อ" → ขึ้น "ติดตั้งแอปแล้ว" → กด <b>"เปิด"</b></span></li>
+      <li><b>เปิด Play Protect กลับ</b><span class="muted">ติดตั้งเสร็จแล้ว กลับไปเปิดสวิตช์ในขั้นที่ 1 ได้เลย แอปยังใช้งานได้ปกติ</span></li>
+      <li><b>ขอ license</b><span class="muted">หน้าแรกของแอปแสดง <b>รหัสเครื่อง</b> → กดปุ่ม 💬 "ขอ / ต่ออายุ license" (รหัสเครื่องถูกคัดลอกให้อัตโนมัติ) → วางส่งในแชท → ได้รหัส license กลับมา → วางในแอป → ติ๊ก "ฉันยอมรับ" → <b>เปิดใช้งาน</b></span></li>
+      <li><b>อ่านและยอมรับข้อตกลง</b><span class="muted">ขึ้นครั้งเดียวต่อเวอร์ชัน</span></li>
+      <li><b>ทำตามหน้า "🔧 ตั้งค่าเครื่องครั้งแรก" ในแอป ทีละข้อ</b><span class="muted">ทุกข้อมีปุ่มพาไปหน้าตั้งค่านั้นเลย:<br>• ติดตั้งแอป <b>Meta AI</b> จาก Play Store → เปิดแล้ว<b>ล็อกอินด้วยบัญชี Facebook สำรอง</b> → กลับมาติ๊ก "ล็อกอินแล้ว"<br>• <b>สิทธิ์เข้าถึงไฟล์</b> → เปิดสวิตช์ → ย้อนกลับ<br>• <b>สิทธิ์ Accessibility</b> → หาหัวข้อ "แอปที่ดาวน์โหลดมา" → AI Drama Studio → เปิดสวิตช์ → อนุญาต (ถ้าติด ดูข้อ "ติดปัญหา" ด้านล่าง)<br>• ไม่ให้ระบบประหยัดแบตปิดแอป และการแจ้งเตือน → กดอนุญาต<br>• กด <b>🧪 ทดสอบระบบ</b> → ขึ้น "✅ ระบบพร้อม" = ใช้งานได้</span></li>
     </ol>
-    <h2>ติดปัญหาตอนติดตั้ง?</h2>
+    <h2>ติดปัญหา?</h2>
     <ol>
-      <li><b>ขึ้นว่า "แอปถูกบล็อกเพื่อปกป้องอุปกรณ์ของคุณ" (Google Play Protect)</b><span class="muted">กด "รับทราบ" → เปิดแอป Play Store → กดรูปโปรไฟล์มุมขวาบน → Play Protect → ⚙️ → ปิด "สแกนแอปด้วย Play Protect" → กลับไปเปิดไฟล์ .apk แล้วติดตั้งใหม่ (ติดตั้งเสร็จแล้วเปิด Play Protect กลับได้เลย)</span></li>
-      <li><b>เปิด Accessibility ไม่ได้ ขึ้นว่า "แอปถูกปฏิเสธไม่ให้เข้าถึง" หรือ "ควบคุมโดยการตั้งค่าที่จำกัด"</b><span class="muted">กด "ปิด" → ไปที่ ตั้งค่า → แอป → AI Drama Studio (หรือกดค้างไอคอนแอป → ข้อมูลแอป) → กด ⋮ มุมขวาบน → "อนุญาตการตั้งค่าที่จำกัด" → ยืนยัน → กลับไปเปิดสวิตช์ Accessibility อีกครั้ง ในแอปมีปุ่ม "ข้อมูลแอป" ที่พาไปหน้านี้ได้เลย</span></li>
+      <li><b>เปิด Accessibility ไม่ได้ ขึ้นว่า "แอปถูกปฏิเสธไม่ให้เข้าถึง" หรือ "ควบคุมโดยการตั้งค่าที่จำกัด"</b><span class="muted">เกิดกับแอปที่ไม่ได้ติดตั้งจาก Play Store (Android 13 ขึ้นไป) — กด "ปิด" → ในแอปกดปุ่ม <b>"ข้อมูลแอป"</b> (หรือ ตั้งค่า → แอป → AI Drama Studio) → กด <b>⋮</b> มุมขวาบน → <b>"อนุญาตการตั้งค่าที่จำกัด"</b> → ยืนยัน → กลับไปเปิดสวิตช์ Accessibility อีกครั้ง</span></li>
+      <li><b>ยังขึ้น "แอปถูกบล็อกเพื่อปกป้องอุปกรณ์ของคุณ"</b><span class="muted">แปลว่า Play Protect ยังเปิดอยู่ → ทำขั้นที่ 1 แล้วกดไฟล์ติดตั้งใหม่</span></li>
+      <li><b>กดดาวน์โหลดแล้วค้าง / ไม่เสร็จ</b><span class="muted">เปิดหน้านี้ใน <b>Chrome</b> แล้วกดใหม่ หรือกดปุ่มดาวน์โหลดค้างไว้ → "ดาวน์โหลดลิงก์"</span></li>
+      <li><b>หลังอัปเดตเวอร์ชันใหม่ แอปไม่ทำงาน</b><span class="muted">มือถือบางรุ่นปิดสิทธิ์ Accessibility ให้เองหลังอัปเดต → เปิดแอป → 🔧 ตั้งค่าเครื่อง → เปิดสวิตช์ Accessibility ใหม่</span></li>
     </ol>
-    <p class="muted" style="margin:0">อัปเดตเวอร์ชันใหม่: ดาวน์โหลดแล้วติดตั้งทับได้เลย license และงานเดิมยังอยู่ครบ</p>
+    <p class="muted" style="margin:0">อัปเดตเวอร์ชันใหม่: ดาวน์โหลดแล้วติดตั้งทับได้เลย (ปิด Play Protect ก่อนเหมือนเดิม) license และงานเดิมยังอยู่ครบ</p>
   </div>
 
   <div class="card">
@@ -84,13 +105,12 @@
   fetch('latest.json?t=' + Date.now(), { cache: 'no-store' })
     .then((r) => r.json())
     .then((j) => {
-      if (j.android?.url) document.getElementById('apk').href = j.android.url;
+      // the button points at AI-Drama-Studio.apk on THIS site (publish-site.sh puts it
+      // there): a github.com link was handed to another browser (Brave) and hung there
       document.getElementById('ver').textContent = `เวอร์ชัน ${j.android?.version || '-'}` + (j.released ? ` · ออกเมื่อ ${j.released}` : '');
       if (j.android?.notes) document.getElementById('notes').textContent = '🆕 ' + j.android.notes;
     })
     .catch(() => { document.getElementById('ver').textContent = 'โหลดข้อมูลเวอร์ชันไม่ได้ — ลองรีเฟรชหน้านี้'; });
-  // never fall back to the repo page: the button only works once the .apk link is known
-  document.getElementById('apk').addEventListener('click', (e) => { if (e.currentTarget.getAttribute('href') === '#') e.preventDefault(); });
 </script>
 </body>
 </html>
