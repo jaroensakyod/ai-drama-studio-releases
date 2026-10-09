@@ -1,9 +1,9 @@
 {
   "android": {
-    "version": "3.4.0",
-    "code": 30400,
-    "url": "https://github.com/jaroensakyod/ai-drama-studio-releases/releases/download/v3.4.0/AI-Drama-Studio-3.4.0.apk",
-    "notes": "Smoother cuts: start and end pose for every shot"
+    "version": "3.5.0",
+    "code": 30500,
+    "url": "https://github.com/jaroensakyod/ai-drama-studio-releases/releases/download/v3.5.0/AI-Drama-Studio-3.5.0.apk",
+    "notes": "หน้าข้อตกลงก่อนใช้งาน (ยอมรับครั้งเดียวต่อเวอร์ชัน) · สิทธิ์ Accessibility จำกัดเฉพาะแอป Meta AI ไม่เห็นแอปอื่น/แอปธนาคาร · ปุ่ม ไปตั้งค่า พาไปหน้าการเข้าถึงตรงๆ · วิธีแก้ แอปถูกปฏิเสธไม่ให้เข้าถึง (การตั้งค่าที่จำกัด) · หลังอัปเดตต้องเปิดสวิตช์ Accessibility ใหม่ 1 ครั้ง"
   },
-  "released": "2026-10-08"
+  "released": "2026-10-09"
 }
