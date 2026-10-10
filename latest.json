@@ -1,9 +1,9 @@
 {
   "android": {
-    "version": "3.6.1",
-    "code": 30601,
-    "url": "https://github.com/jaroensakyod/ai-drama-studio-releases/releases/download/v3.6.1/AI-Drama-Studio-3.6.1.apk",
-    "notes": "บทพูดเต็ม 10 วิ พูดทีละคน ฉากต่อเนื่อง · ปุ่ม 🎲 สุ่มเรื่อง · เตือนเมื่อยังไม่กรอกเรื่อง · ทดลองฟรี 1 วันใช้ได้แล้ว"
+    "version": "3.6.2",
+    "code": 30602,
+    "url": "https://github.com/jaroensakyod/ai-drama-studio-releases/releases/download/v3.6.2/AI-Drama-Studio-3.6.2.apk",
+    "notes": "คลิปได้ท่ากล้องและเสียงตามที่เลือก · งานไม่หายกลางทางเมื่อมือถือ RAM น้อย · พูดไม่เกิน 3 ประโยคต่อช็อต พูดทีละคน"
   },
   "released": "2026-10-10"
 }
