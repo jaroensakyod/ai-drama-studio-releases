@@ -1,9 +1,9 @@
 {
   "android": {
-    "version": "3.6.0",
-    "code": 30600,
-    "url": "https://github.com/jaroensakyod/ai-drama-studio-releases/releases/download/v3.6.0/AI-Drama-Studio-3.6.0.apk",
-    "notes": "เขียนบท/ทำรูปด้วย ChatGPT ได้ (ติดลิมิตแล้วสลับไป Meta เอง) · คลิปพูดตรงบททุกคำ · ซับ .srt ทุกคลิปและทั้งตอน · การ์ด 🎨 เริ่มจากรูป อ่านสไตล์แล้วกรอกเรื่องให้ · แท็บ Storyboard · ทดลองฟรี 1 วันในแอป · Meta ติดลิมิตวันนี้ → คิวหยุดแล้วทำต่อพรุ่งนี้ · ใช้บนคอมผ่านโปรแกรมจำลองมือถือได้ · ต้องตั้งภาษาเครื่องเป็นไทย · หลังอัปเดตต้องเปิดสวิตช์ Accessibility ใหม่ 1 ครั้ง"
+    "version": "3.6.1",
+    "code": 30601,
+    "url": "https://github.com/jaroensakyod/ai-drama-studio-releases/releases/download/v3.6.1/AI-Drama-Studio-3.6.1.apk",
+    "notes": "บทพูดเต็ม 10 วิ พูดทีละคน ฉากต่อเนื่อง · ปุ่ม 🎲 สุ่มเรื่อง · เตือนเมื่อยังไม่กรอกเรื่อง · ทดลองฟรี 1 วันใช้ได้แล้ว"
   },
-  "released": "2026-10-09"
+  "released": "2026-10-10"
 }
