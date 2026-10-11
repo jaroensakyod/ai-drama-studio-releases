@@ -1,9 +1,9 @@
 {
   "android": {
-    "version": "3.6.2",
-    "code": 30602,
-    "url": "https://github.com/jaroensakyod/ai-drama-studio-releases/releases/download/v3.6.2/AI-Drama-Studio-3.6.2.apk",
-    "notes": "คลิปได้ท่ากล้องและเสียงตามที่เลือก · งานไม่หายกลางทางเมื่อมือถือ RAM น้อย · พูดไม่เกิน 3 ประโยคต่อช็อต พูดทีละคน"
+    "version": "3.6.3",
+    "code": 30603,
+    "url": "https://github.com/jaroensakyod/ai-drama-studio-releases/releases/download/v3.6.3/AI-Drama-Studio-3.6.3.apk",
+    "notes": "ปิดหน้าต่างขอให้คะแนนของ Google Play ให้เอง · ใช้ Meta ทำรูปแล้วทำคลิปต่อได้ไม่ติด · ไม่ยอมแพ้ง่ายเมื่อมีอะไรบังปุ่ม"
   },
-  "released": "2026-10-10"
+  "released": "2026-10-11"
 }
