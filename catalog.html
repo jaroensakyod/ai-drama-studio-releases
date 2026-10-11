@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ตัวอย่างงาน — AI Drama Studio</title>
+<meta name="description" content="ตัวอย่างคลิปและรูปจาก AI Drama Studio ทุกแนวเรื่อง การ์ตูน คลิปขายของ ท่ากล้อง เสียง สไตล์ภาพ แสง และมุมกล้อง">
+<link rel="icon" href="icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f5fb; --card: #ffffff; --fg: #17151f; --muted: #6e6a80; --line: #e6e3f0;
+    --accent: #7c4dff; --chip: #efeafd; --grad: linear-gradient(135deg, #7c4dff 0%, #b347f5 50%, #ec4899 100%);
+    --shadow: 0 1px 2px rgba(23, 21, 31, .04), 0 10px 30px rgba(80, 60, 160, .10);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0d0b14; --card: #15131f; --fg: #ecebf4; --muted: #9b97ad; --line: #262236; --chip: #241f38;
+      --shadow: 0 10px 30px rgba(0, 0, 0, .35); }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.55 "Noto Sans Thai", "Leelawadee UI", sans-serif; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 16px 48px; }
+  header { text-align: center; padding: 36px 0 12px; }
+  header a.back { display: inline-block; margin-bottom: 12px; color: var(--muted); text-decoration: none; font-size: 14px; }
+  h1 { margin: 0 0 4px; font-size: 30px; font-weight: 800; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .tag { color: var(--muted); margin: 0; }
+  .tabs { position: sticky; top: 0; z-index: 5; background: var(--bg); padding: 12px 0; display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tabs button { flex: none; border: 1px solid var(--line); background: var(--card); color: var(--fg); border-radius: 999px; padding: 8px 14px; font: 600 14px/1 inherit; cursor: pointer; }
+  .tabs button.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .tabs small { opacity: .7; font-weight: 400; margin-left: 4px; }
+  .note { color: var(--muted); font-size: 14px; margin: 4px 0 14px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+  .item { background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); cursor: pointer; display: flex; flex-direction: column; }
+  .item .media { position: relative; aspect-ratio: 9 / 16; background: #000; }
+  .item img, .item video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .item .badge { position: absolute; top: 8px; left: 8px; background: rgba(0,0,0,.6); color: #fff; font-size: 12px; padding: 3px 8px; border-radius: 999px; }
+  .item .play { position: absolute; inset: auto 8px 8px auto; width: 38px; height: 38px; border-radius: 50%; background: rgba(0,0,0,.55); color: #fff; display: grid; place-items: center; font-size: 16px; }
+  .item .cap { padding: 10px 12px 12px; }
+  .item .cap b { display: block; font-size: 15px; line-height: 1.35; }
+  .item .cap span { color: var(--muted); font-size: 12px; }
+  dialog { border: none; padding: 0; border-radius: 18px; background: var(--card); color: var(--fg); width: min(860px, 96vw); max-height: 94vh; box-shadow: 0 30px 80px rgba(0,0,0,.4); }
+  dialog::backdrop { background: rgba(10, 8, 20, .7); }
+  .dlg { display: grid; grid-template-columns: minmax(0, 340px) 1fr; gap: 0; max-height: 94vh; }
+  .dlg .m { background: #000; display: flex; align-items: center; }
+  .dlg .m video, .dlg .m img { width: 100%; max-height: 94vh; object-fit: contain; display: block; }
+  .dlg .t { padding: 20px; overflow-y: auto; }
+  .dlg h2 { margin: 0 0 4px; font-size: 22px; }
+  .dlg .g { color: var(--muted); font-size: 13px; margin-bottom: 12px; }
+  .dlg h3 { font-size: 14px; margin: 16px 0 6px; color: var(--accent); }
+  .dlg ul { margin: 0; padding-left: 18px; }
+  .dlg li { margin-bottom: 4px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chips span { background: var(--chip); border-radius: 8px; padding: 4px 8px; font-size: 12px; }
+  .chips i { font-style: normal; color: var(--muted); margin-right: 4px; }
+  .prompt { background: var(--chip); border-radius: 10px; padding: 10px; font-size: 13px; white-space: pre-wrap; }
+  .x { position: absolute; top: 10px; right: 12px; border: none; background: rgba(0,0,0,.5); color: #fff; width: 34px; height: 34px; border-radius: 50%; font-size: 18px; cursor: pointer; z-index: 2; }
+  .cta { text-align: center; margin: 32px 0 0; }
+  .cta a { display: inline-block; padding: 14px 24px; border-radius: 14px; background: var(--grad); color: #fff; text-decoration: none; font-weight: 700; }
+  @media (max-width: 640px) {
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .dlg { grid-template-columns: 1fr; overflow-y: auto; }
+    .dlg .m video, .dlg .m img { max-height: 60vh; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="back" href="./">← กลับหน้าดาวน์โหลด</a>
+    <h1>ตัวอย่างงาน</h1>
+    <p class="tag">ทุกชิ้นทำด้วย AI Drama Studio ล้วนๆ ไม่ได้ตัดต่อหรือแก้เพิ่ม — กดดูคลิป บทพูด และค่าที่ตั้ง</p>
+  </header>
+  <nav class="tabs" id="tabs"></nav>
+  <p class="note" id="note"></p>
+  <div class="grid" id="grid"></div>
+  <div class="cta"><a href="./">📥 ดาวน์โหลดแอป · ทดลองฟรี 1 วัน</a></div>
+</div>
+
+<dialog id="dlg"><button class="x" id="x" aria-label="ปิด">✕</button><div class="dlg" id="dlgBody"></div></dialog>
+
+<script>
+const NOTES = {
+  all: 'คลิปยาว 10 วินาที ตัวละครพูดภาษาไทยตามบท · รูปคือภาพเริ่มต้นของแต่ละช็อต',
+  genre: 'เลือกเทมเพลตเรื่องเดียว แอปตั้งแนว สไตล์ภาพ กล้อง และเสียงให้ครบ แล้วเขียนบทให้เอง — แต่ละคลิปคือ 1 ช็อตจากบทจริง',
+  cartoon: 'โหมดการ์ตูน: เลือกประเภท แอปเลือกลายเส้นและวิธีเล่าให้',
+  ad: 'โหมดขายของ: ใส่ชื่อสินค้า จุดเด่น ราคา แอปเขียนสคริปต์ขายตามรูปแบบคลิป',
+  camera: 'ฉากเดียวกัน บทเดียวกัน เปลี่ยนแค่ท่ากล้อง',
+  sound: 'ฉากเดียวกัน บทเดียวกัน เปลี่ยนแค่เสียง/ดนตรีประกอบ',
+  style: 'ฉากเดียวกัน (แม่ลูกที่ร้านส้มตำ) เปลี่ยนแค่สไตล์ภาพ',
+  mood: 'ฉากเดียวกัน เปลี่ยนแค่อารมณ์และโทนสี', lighting: 'ฉากเดียวกัน เปลี่ยนแค่แสง', time: 'ฉากเดียวกัน เปลี่ยนแค่ช่วงเวลา',
+  weather: 'ฉากเดียวกัน เปลี่ยนแค่อากาศ', shot: 'ฉากเดียวกัน เปลี่ยนแค่ขนาดภาพ (ใกล้-ไกล)', angle: 'ฉากเดียวกัน เปลี่ยนแค่มุมกล้อง',
+};
+const esc = (t) => String(t ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+let DATA, cur = 'all';
+
+fetch('catalog/data.json').then((r) => r.json()).then((d) => {
+  DATA = d;
+  const counts = d.items.reduce((a, x) => ((a[x.group] = (a[x.group] || 0) + 1), a), {});
+  const tabs = document.getElementById('tabs');
+  const add = (k, label, n) => {
+    const b = document.createElement('button');
+    b.innerHTML = `${esc(label)}<small>${n}</small>`;
+    b.onclick = () => { cur = k; render(); };
+    b.dataset.k = k;
+    tabs.append(b);
+  };
+  add('all', 'ทั้งหมด', d.items.length);
+  for (const [k, th] of Object.entries(d.groups)) if (counts[k]) add(k, th, counts[k]);
+  const want = location.hash.slice(1);
+  if (want && (want === 'all' || counts[want])) cur = want;
+  render();
+});
+
+function render() {
+  document.querySelectorAll('#tabs button').forEach((b) => b.classList.toggle('on', b.dataset.k === cur));
+  history.replaceState(null, '', cur === 'all' ? location.pathname : '#' + cur);
+  document.getElementById('note').textContent = NOTES[cur] || '';
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+  for (const x of DATA.items.filter((i) => cur === 'all' || i.group === cur)) {
+    const el = document.createElement('div');
+    el.className = 'item';
+    el.innerHTML = `<div class="media"><img loading="lazy" src="catalog/${esc(x.img)}" alt="${esc(x.label)}">
+      <span class="badge">${x.clip ? '🎬 คลิป' : '🖼 รูป'}</span>${x.clip ? '<span class="play">▶</span>' : ''}</div>
+      <div class="cap"><b>${esc(x.emoji)} ${esc(x.label)}</b><span>${esc(x.groupTh)}${x.region ? ' · ' + esc(x.region) : ''}</span></div>`;
+    el.onclick = () => open(x);
+    grid.append(el);
+  }
+}
+
+function open(x) {
+  const lines = x.lines?.length ? `<h3>บทพูดในช็อตนี้</h3><ul>${x.lines.map((l) => `<li>${esc(l)}</li>`).join('')}</ul>` : '';
+  const narr = x.narration ? `<h3>เสียงบรรยาย</h3><p>${esc(x.narration)}</p>` : '';
+  const beat = x.beat ? `<h3>ฉากนี้</h3><p>${esc(x.beat)}</p>` : '';
+  const set = Object.keys(x.settings || {}).length ? `<h3>ค่าที่ตั้งในแอป</h3><div class="chips">${Object.entries(x.settings).map(([k, v]) => `<span><i>${esc(k)}</i>${esc(v)}</span>`).join('')}</div>` : '';
+  const prompt = x.metaPrompt ? `<h3>คำสั่งที่แอปส่งให้ Meta</h3><div class="prompt">${esc(x.metaPrompt)}</div>` : '';
+  document.getElementById('dlgBody').innerHTML = `<div class="m">${x.clip
+    ? `<video src="catalog/${esc(x.clip)}" poster="catalog/${esc(x.img)}" controls autoplay playsinline></video>`
+    : `<img src="catalog/${esc(x.img)}" alt="">`}</div>
+    <div class="t"><h2>${esc(x.emoji)} ${esc(x.label)}</h2><div class="g">${esc(x.groupTh)}${x.region ? ' · ' + esc(x.region) : ''}</div>${beat}${lines}${narr}${set}${prompt}</div>`;
+  document.getElementById('dlg').showModal();
+}
+const dlg = document.getElementById('dlg');
+const close = () => { dlg.querySelector('video')?.pause(); dlg.close(); };
+document.getElementById('x').onclick = close;
+dlg.addEventListener('click', (e) => { if (e.target === dlg) close(); });
+dlg.addEventListener('close', () => dlg.querySelector('video')?.pause());
+</script>
+</body>
+</html>
