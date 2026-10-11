@@ -1,9 +1,9 @@
 {
   "android": {
-    "version": "3.7.2",
-    "code": 30702,
-    "url": "https://github.com/jaroensakyod/ai-drama-studio-releases/releases/download/v3.7.2/AI-Drama-Studio-3.7.2.apk",
-    "notes": "คลิปการ์ตูน/ภาพวาด คงสไตล์เดิม ไม่กลายเป็นคนจริง"
+    "version": "3.7.3",
+    "code": 30703,
+    "url": "https://github.com/jaroensakyod/ai-drama-studio-releases/releases/download/v3.7.3/AI-Drama-Studio-3.7.3.apk",
+    "notes": "คลิปการ์ตูน/ภาพวาด ล็อกสไตล์แน่นขึ้น ขยับน้อย กล้องนิ่ง ภาพไม่เพี้ยนเป็นคนจริง"
   },
   "released": "2026-10-11"
 }
