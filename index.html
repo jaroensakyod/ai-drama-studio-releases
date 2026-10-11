@@ -57,6 +57,9 @@
   .need li { margin-bottom: 8px; }
   ol li .muted { display: block; }
   ol li .muted b { display: inline; }
+  .cat { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .cat a { display: block; text-align: center; padding: 12px 6px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); text-decoration: none; font-weight: 600; font-size: 15px; }
+  @media (max-width: 420px) { .cat { grid-template-columns: repeat(2, 1fr); } }
   video { width: 100%; border-radius: 12px; background: #000; display: block; }
   .vmain { max-width: 360px; margin: 6px auto 0; }
   .vcap { text-align: center; margin: 8px 0 0; }
@@ -99,7 +102,19 @@
     </ul>
   </div>
 
-  <a class="btn main" href="catalog.html" style="margin:16px 0">🎬 ดูตัวอย่างงาน 77 ชิ้น (ทุกแนว ทุกสไตล์)</a>
+  <div class="card" id="samples">
+    <h2>🎬 ตัวอย่างงาน</h2>
+    <p class="muted">ทุกชิ้นทำด้วยแอปนี้ล้วนๆ — กดดูคลิป บทพูด และค่าที่ตั้ง</p>
+    <div class="cat">
+      <a href="catalog.html#genre">🎭 แนวละคร</a>
+      <a href="catalog.html#cartoon">🧸 การ์ตูน</a>
+      <a href="catalog.html#ad">🛒 คลิปขายของ</a>
+      <a href="catalog.html#camera">🎥 ท่ากล้อง</a>
+      <a href="catalog.html#sound">🔊 เสียง</a>
+      <a href="catalog.html#style">🎨 สไตล์ภาพ</a>
+    </div>
+    <a class="btn main" href="catalog.html" style="margin-top:12px">ดูตัวอย่างทั้งหมด →</a>
+  </div>
 
   <div class="card" id="videos">
     <h2>📺 วิดีโอสอนใช้งาน</h2>
