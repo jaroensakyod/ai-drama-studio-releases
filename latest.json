@@ -1,9 +1,9 @@
 {
   "android": {
-    "version": "3.7.0",
-    "code": 30700,
-    "url": "https://github.com/jaroensakyod/ai-drama-studio-releases/releases/download/v3.7.0/AI-Drama-Studio-3.7.0.apk",
-    "notes": "ใหม่: โหมด 📜 สารคดี/เล่าเรื่อง — เสียงบรรยายจาก Meta (หรือ Gemini) รวมเป็นไฟล์เดียวพร้อมซับในแอป · ปิดหน้าต่างให้คะแนน Google Play เอง"
+    "version": "3.7.1",
+    "code": 30701,
+    "url": "https://github.com/jaroensakyod/ai-drama-studio-releases/releases/download/v3.7.1/AI-Drama-Studio-3.7.1.apk",
+    "notes": "รูปได้ช่วงเวลา อากาศ มุมกล้อง ขนาดภาพ ตามที่เลือก · ไม่หยิบคลิปเก่าที่ค้างในแชท Meta มาใช้"
   },
   "released": "2026-10-11"
 }
