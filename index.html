@@ -57,6 +57,14 @@
   .need li { margin-bottom: 8px; }
   ol li .muted { display: block; }
   ol li .muted b { display: inline; }
+  video { width: 100%; border-radius: 12px; background: #000; display: block; }
+  .vmain { max-width: 360px; margin: 6px auto 0; }
+  .vcap { text-align: center; margin: 8px 0 0; }
+  .vsec { margin: 22px 0 10px; font-size: 17px; }
+  .vgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+  .vgrid figure { margin: 0; }
+  .vgrid figcaption { font-size: 13px; color: var(--muted); margin-top: 6px; text-align: center; }
+  .vgrid figcaption b { color: inherit; }
   footer { text-align: center; color: var(--muted); font-size: 13px; margin-top: 28px; }
 </style>
 </head>
@@ -89,6 +97,21 @@
       <li>ย้ายเครื่อง (มือถือพัง/เปลี่ยนเครื่อง) ฟรีปีละ 1 ครั้ง (ตลอดชีพ ปีละ 2 ครั้ง) · ครั้งต่อไป ฿199</li>
       <li>1 license ใช้ได้กับเครื่องที่ลงทะเบียนเท่านั้น ห้ามแชร์หรือขายต่อ</li>
     </ul>
+  </div>
+
+  <div class="card" id="videos">
+    <h2>📺 วิดีโอสอนใช้งาน</h2>
+    <p class="muted">เริ่มจากคลิปแรก (3 นาที) แล้วดูตอนละเอียดเฉพาะเรื่องที่สงสัย</p>
+    <video class="vmain" controls preload="none" playsinline poster="videos/quick.jpg" src="videos/quick.mp4"></video>
+    <p class="vcap"><b>สอนใช้งานฉบับย่อ</b> · เตรียมเครื่อง ติดตั้ง เปิดใช้ license จนได้คลิปแรก</p>
+    <h3 class="vsec">สอนละเอียดทีละฟังก์ชัน</h3>
+    <div class="vgrid">
+      <figure><video controls preload="none" playsinline poster="videos/ep1.jpg" src="videos/ep1.mp4"></video><figcaption><b>ตอน 1</b> แท็บเรื่อง · 3:46</figcaption></figure>
+      <figure><video controls preload="none" playsinline poster="videos/ep2.jpg" src="videos/ep2.mp4"></video><figcaption><b>ตอน 2</b> Storyboard · 2:23</figcaption></figure>
+      <figure><video controls preload="none" playsinline poster="videos/ep3.jpg" src="videos/ep3.mp4"></video><figcaption><b>ตอน 3</b> คิว · 1:01</figcaption></figure>
+      <figure><video controls preload="none" playsinline poster="videos/ep4.jpg" src="videos/ep4.mp4"></video><figcaption><b>ตอน 4</b> ตั้งค่า · 1:18</figcaption></figure>
+      <figure><video controls preload="none" playsinline poster="videos/ep5.jpg" src="videos/ep5.mp4"></video><figcaption><b>ตอน 5</b> แถบบน + แก้ปัญหา · 1:19</figcaption></figure>
+    </div>
   </div>
 
   <div class="card warn">
