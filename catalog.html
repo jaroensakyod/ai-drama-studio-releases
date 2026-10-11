@@ -96,7 +96,8 @@ const NOTES = {
 const esc = (t) => String(t ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 let DATA, cur = 'all';
 
-fetch('catalog/data.json').then((r) => r.json()).then((d) => {
+// no-store + ?v=: a phone kept showing an old clip after the catalogue was rebuilt
+fetch('catalog/data.json?t=' + Date.now(), { cache: 'no-store' }).then((r) => r.json()).then((d) => {
   DATA = d;
   const counts = d.items.reduce((a, x) => ((a[x.group] = (a[x.group] || 0) + 1), a), {});
   const tabs = document.getElementById('tabs');
@@ -123,7 +124,7 @@ function render() {
   for (const x of DATA.items.filter((i) => cur === 'all' || i.group === cur)) {
     const el = document.createElement('div');
     el.className = 'item';
-    el.innerHTML = `<div class="media"><img loading="lazy" src="catalog/${esc(x.img)}" alt="${esc(x.label)}">
+    el.innerHTML = `<div class="media"><img loading="lazy" src="catalog/${esc(x.img)}?v=${DATA.built}" alt="${esc(x.label)}">
       <span class="badge">${x.clip ? '🎬 คลิป' : '🖼 รูป'}</span>${x.clip ? '<span class="play">▶</span>' : ''}</div>
       <div class="cap"><b>${esc(x.emoji)} ${esc(x.label)}</b><span>${esc(x.groupTh)}${x.region ? ' · ' + esc(x.region) : ''}</span></div>`;
     el.onclick = () => open(x);
@@ -138,8 +139,8 @@ function open(x) {
   const set = Object.keys(x.settings || {}).length ? `<h3>ค่าที่ตั้งในแอป</h3><div class="chips">${Object.entries(x.settings).map(([k, v]) => `<span><i>${esc(k)}</i>${esc(v)}</span>`).join('')}</div>` : '';
   const prompt = x.metaPrompt ? `<h3>คำสั่งที่แอปส่งให้ Meta</h3><div class="prompt">${esc(x.metaPrompt)}</div>` : '';
   document.getElementById('dlgBody').innerHTML = `<div class="m">${x.clip
-    ? `<video src="catalog/${esc(x.clip)}" poster="catalog/${esc(x.img)}" controls autoplay playsinline></video>`
-    : `<img src="catalog/${esc(x.img)}" alt="">`}</div>
+    ? `<video src="catalog/${esc(x.clip)}?v=${DATA.built}" poster="catalog/${esc(x.img)}?v=${DATA.built}" controls autoplay playsinline></video>`
+    : `<img src="catalog/${esc(x.img)}?v=${DATA.built}" alt="">`}</div>
     <div class="t"><h2>${esc(x.emoji)} ${esc(x.label)}</h2><div class="g">${esc(x.groupTh)}${x.region ? ' · ' + esc(x.region) : ''}</div>${beat}${lines}${narr}${set}${prompt}</div>`;
   document.getElementById('dlg').showModal();
 }
