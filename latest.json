@@ -1,9 +1,9 @@
 {
   "android": {
-    "version": "3.8.0",
-    "code": 30800,
-    "url": "https://github.com/jaroensakyod/ai-drama-studio-releases/releases/download/v3.8.0/AI-Drama-Studio-3.8.0.apk",
-    "notes": "📜 โหมดสารคดีเลือกบทบรรยายเป็นกลอนแปดได้ (ช็อตละ 1 บท เหมาะกับนิทาน ชาดก ตำนาน) · 💡 ปุ่มขอ 10 ไอเดียเรื่องในแท็บคิว ติ๊กแล้วใส่คิวได้ทันที"
+    "version": "3.8.1",
+    "code": 30801,
+    "url": "https://github.com/jaroensakyod/ai-drama-studio-releases/releases/download/v3.8.1/AI-Drama-Studio-3.8.1.apk",
+    "notes": "🔁 ซีรีส์อัตโนมัติ: ตั้งเวลาไว้ แอปเขียนตอนต่อ (ตัวละครเดิม) ทำคลิป รวมไฟล์ ทำปก ให้ทุกวันเอง · กันไฟล์คลิปหายตอนรวมตอน · ปุ่มเขียนตอนต่อแสดงชื่อผู้เขียนบทที่เลือก"
   },
   "released": "2026-10-15"
 }
