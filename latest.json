@@ -1,9 +1,9 @@
 {
   "android": {
-    "version": "3.7.3",
-    "code": 30703,
-    "url": "https://github.com/jaroensakyod/ai-drama-studio-releases/releases/download/v3.7.3/AI-Drama-Studio-3.7.3.apk",
-    "notes": "คลิปการ์ตูน/ภาพวาด ล็อกสไตล์แน่นขึ้น ขยับน้อย กล้องนิ่ง ภาพไม่เพี้ยนเป็นคนจริง"
+    "version": "3.7.5",
+    "code": 30705,
+    "url": "https://github.com/jaroensakyod/ai-drama-studio-releases/releases/download/v3.7.5/AI-Drama-Studio-3.7.5.apk",
+    "notes": "ไฟล์คลิปที่บันทึกครบสมบูรณ์ (ไม่ค้างครึ่งไฟล์) · ปุ่ม 📂 เปิดโฟลเดอร์เรื่อง · 🎞 รวมคลิปเป็นไฟล์เดียวได้ทุกโหมด · โหมดสารคดี: บทบรรยายสั้นลง อ่านเพี้ยนน้อยลง + ตั้งค่าคำห้ามใช้/คำอ่าน + ปุ่มทดสอบเสียง"
   },
-  "released": "2026-10-11"
+  "released": "2026-10-15"
 }
