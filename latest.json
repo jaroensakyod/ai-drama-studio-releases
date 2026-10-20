@@ -1,9 +1,9 @@
 {
   "android": {
-    "version": "3.8.2",
-    "code": 30802,
-    "url": "https://github.com/jaroensakyod/ai-drama-studio-releases/releases/download/v3.8.2/AI-Drama-Studio-3.8.2.apk",
-    "notes": "แก้อาการ 'หาช่องพิมพ์ไม่เจอ' ที่ต้องกดช่องแชทเอง (แอปแตะช่องแชทให้เอง) · ถ้ายังติด แอปจะบันทึกหน้าจอ Meta ไว้ที่ Download/AI-Drama/_debug ส่งให้ผู้พัฒนาได้"
+    "version": "3.8.3",
+    "code": 30803,
+    "url": "https://github.com/jaroensakyod/ai-drama-studio-releases/releases/download/v3.8.3/AI-Drama-Studio-3.8.3.apk",
+    "notes": "แก้อาการ 'หาช่องพิมพ์ไม่เจอ' หลัง Meta เขียนบทเป็นกล่องโค้ด (แอปแตะช่องแชทเหนือปุ่ม + ให้เอง)"
   },
-  "released": "2026-10-19"
+  "released": "2026-10-20"
 }
