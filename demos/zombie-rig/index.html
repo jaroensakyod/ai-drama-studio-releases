@@ -33,40 +33,42 @@
 // pivot: rotation point in the part image (px).  aim: [p0,p1,dir] -> base rotation so p0->p1 points to dir (deg, 0=right, 90=down)
 // attach: where this part sits in the PARENT image coordinates.  z: draw order.
 const RIG = {
-  hips:   { img:'hips',   pivot:[96,10],  scale:1.0,  z:4, children:['thigh_b','thigh_f','torso'] },
-  thigh_b:{ img:'thigh_r',pivot:[45,12],  attach:[60,22],  aim:[[45,12],[70,138],90], z:1, children:['shin_b'] },
-  shin_b: { img:'shin_r', pivot:[45,10],  attach:[70,138], aim:[[45,10],[40,118],90], z:0 },
-  thigh_f:{ img:'thigh_l',pivot:[72,10],  attach:[132,22], aim:[[72,10],[32,140],90], z:3, children:['shin_f'] },
-  shin_f: { img:'shin_l', pivot:[60,10],  attach:[32,140], aim:[[60,10],[40,118],90], z:2 },
-  torso:  { img:'torso',  pivot:[110,148],attach:[96,14],  z:6, children:['head','uarm_b','uarm_f'] },
-  head:   { img:'head',   pivot:[118,162],attach:[128,14], z:9 },
-  uarm_b: { img:'uarm_r', pivot:[40,12],  attach:[95,30],  aim:[[40,12],[44,118],80], z:-2, children:['farm_b'] },
-  farm_b: { img:'farm_r', pivot:[14,24],  attach:[44,112], aim:[[14,24],[130,34],8], z:-3 },
-  uarm_f: { img:'uarm_l', pivot:[55,12],  attach:[160,38], aim:[[55,12],[26,116],80], z:8, children:['farm_f'] },
-  farm_f: { img:'farm_l', pivot:[14,26],  attach:[26,112], aim:[[14,26],[140,42],8], z:7 },
+  hips:   { img:'hips',   pivot:[96,12],  scale:1.0,  z:4, children:['thigh_b','thigh_f','torso'] },
+  thigh_b:{ img:'thigh_l',pivot:[75,14],  attach:[62,26],  z:1, children:['shin_b'] },
+  shin_b: { img:'shin_l', pivot:[58,14],  attach:[38,128], z:0 },
+  thigh_f:{ img:'thigh_r',pivot:[42,14],  attach:[128,26], z:3, children:['shin_f'] },
+  shin_f: { img:'shin_r', pivot:[42,14],  attach:[84,128], z:2 },
+  torso:  { img:'torso',  pivot:[112,128],attach:[96,14],  z:6, children:['head','uarm_b','uarm_f'] },
+  head:   { img:'head',   pivot:[118,162],attach:[122,12], z:9 },
+  uarm_b: { img:'uarm_r', pivot:[40,14],  attach:[150,26], z:-2, children:['farm_b'] },
+  farm_b: { img:'farm_r', pivot:[20,10],  attach:[44,110], z:-3 },
+  uarm_f: { img:'uarm_l', pivot:[58,14],  attach:[95,30],  z:8, children:['farm_f'] },
+  farm_f: { img:'farm_l', pivot:[22,10],  attach:[30,108], z:7 },
 };
 
 // ---------- Poses / motions: return {bone: degrees}, plus root offset ----------
 const S = Math.sin, C = Math.cos, PI = Math.PI;
 const MOVES = {
+  'ท่าพัก (Rest)': t => ({}),
   'ยืน (Idle)': t => { const a=t*2.2; return {
     root:[0, S(a*2)*2], hips:S(a)*1.5, torso:-3+S(a)*2.5, head:S(a+1)*5 + S(a*0.37)*3,
     uarm_f:S(a)*6, farm_f:S(a+0.6)*6, uarm_b:S(a+0.4)*5, farm_b:S(a+1)*6,
     thigh_f:2, shin_f:-2, thigh_b:-2, shin_b:2 }; },
   'เดิน (Walk)': t => { const a=t*4.2; return {
     root:[0, -Math.abs(S(a))*7], hips:S(a)*3, torso:-6+S(a*2)*2, head:S(a*2+0.5)*6-2,
-    thigh_f:S(a)*24, shin_f:Math.max(0,-C(a))*30, thigh_b:-S(a)*24, shin_b:Math.max(0,C(a))*30,
+    thigh_f:10+S(a)*22, shin_f:Math.max(0,-C(a))*30-4, thigh_b:-10-S(a)*22, shin_b:Math.max(0,C(a))*30+4,
     uarm_f:-S(a)*10-5, farm_f:-S(a)*8, uarm_b:S(a)*10-5, farm_b:S(a)*8 }; },
   'วิ่ง (Run)': t => { const a=t*7.5; return {
     root:[0, -Math.abs(S(a))*16+4], hips:S(a)*4-6, torso:-16+S(a*2)*3, head:S(a*2)*7+8,
-    thigh_f:S(a)*40-6, shin_f:Math.max(0,-C(a))*60+5, thigh_b:-S(a)*40-6, shin_b:Math.max(0,C(a))*60+5,
+    thigh_f:8+S(a)*38, shin_f:Math.max(0,-C(a))*60+5, thigh_b:-14-S(a)*38, shin_b:Math.max(0,C(a))*60+5,
     uarm_f:-S(a)*35-15, farm_f:-20-S(a)*15, uarm_b:S(a)*35-15, farm_b:-20+S(a)*15 }; },
-  'โจมตี (Attack)': t => { const p=(t*1.1)%1;
-    // wind-up 0-.45, strike .45-.6, recover .6-1
-    const e = p<.45 ? -easeInOut(p/.45) : p<.6 ? -1+2.6*easeOut((p-.45)/.15) : 1.6*(1-easeInOut((p-.6)/.4));
-    return { root:[e*6, 0], hips:e*2, torso:-4+e*9, head:e*6,
-      uarm_f:e*55, farm_f:e*30, uarm_b:e*45, farm_b:e*25,
-      thigh_f:8+e*6, shin_f:-4, thigh_b:-10-e*4, shin_b:6 }; },
+  'โจมตี (Attack)': t => { const p=(t*1.0)%1;
+    // 0-.45 raise arms overhead, .45-.6 slam down/forward, .6-1 recover
+    const arm = p<.45 ? -150*easeInOut(p/.45) : p<.6 ? -150+150*easeOut((p-.45)/.15) : 0;
+    const lean = p<.45 ? -easeInOut(p/.45) : p<.6 ? -1+2*easeOut((p-.45)/.15) : 1-easeInOut((p-.6)/.4);
+    return { root:[lean*10, 0], hips:lean*3, torso:lean*12, head:lean*8,
+      uarm_f:arm, farm_f:arm*0.15, uarm_b:arm*0.9, farm_b:arm*0.1,
+      thigh_f:lean*-6, shin_f:lean*4, thigh_b:lean*4, shin_b:2 }; },
   'ล้ม (Fall)': t => { const T=t%3.4, p=Math.min(1,T/1.0), e=easeIn(p),
       b=p>=1 ? Math.abs(S((T-1)*9))*Math.exp(-(T-1)*5)*8 : 0, c=p>=1 ? S((T-1)*5)*Math.min(1,(T-1)*2) : 0;
     return { root:[e*5, e*128 - b], rootRot:e*80, hips:0, torso:e*4, head:-e*55 + c*4,
@@ -91,7 +93,7 @@ for (const b of Object.values(RIG)) {
 // limbs keep their aim relative to the parent's world orientation, so cancel parent's base
 function baseOf(name, parent){ return RIG[name].base - (parent ? RIG[parent].base : 0); }
 
-let current = Object.keys(MOVES)[0], t0 = performance.now(), tAcc = 0, last = t0;
+let current = Object.keys(MOVES)[1], t0 = performance.now(), tAcc = 0, last = t0;
 const bar = document.getElementById('moves');
 for (const k of Object.keys(MOVES)) {
   const btn = document.createElement('button'); btn.textContent = k;
