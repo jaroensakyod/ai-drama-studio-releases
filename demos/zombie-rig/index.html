@@ -21,7 +21,7 @@
 </head>
 <body>
 <h1>Zombie Rig: ต้นแบบ Cut-out Animation</h1>
-<p class="sub">ชิ้นส่วนตัดจากชีทตัวละคร แล้วประกอบเป็นกระดูกด้วย Canvas</p>
+<p class="sub">ชิ้นส่วนตัดจากภาพตัวเต็ม แล้วประกอบเป็นกระดูกด้วย Canvas</p>
 <canvas id="c" width="720" height="520"></canvas>
 <div class="bar" id="moves"></div>
 <div class="bar">
@@ -29,107 +29,89 @@
   <label><input id="bones" type="checkbox"> แสดงกระดูก</label>
 </div>
 <script>
-// ---------- Rig definition ----------
-// pivot: rotation point in the part image (px).  aim: [p0,p1,dir] -> base rotation so p0->p1 points to dir (deg, 0=right, 90=down)
-// attach: where this part sits in the PARENT image coordinates.  z: draw order.
+// ---------- Rig: all parts were cut from the full-body reference, so they share one coordinate space ----------
+// off: top-left of the part image in reference coords.  pivot: joint position in reference coords.
+const OFF = {"torso": [107, 164], "head": [187, -27], "uarm_f": [229, 253], "farm_f": [277, 286], "arm_b": [337, 239], "thigh_b": [86, 335], "thigh_f": [212, 335], "shin_b": [63, 503], "shin_f": [263, 504]};
 const RIG = {
-  hips:   { img:'hips',   pivot:[96,12],  scale:1.0,  z:4, children:['thigh_b','thigh_f','torso'] },
-  thigh_b:{ img:'thigh_l',pivot:[75,14],  attach:[62,26],  z:1, children:['shin_b'] },
-  shin_b: { img:'shin_l', pivot:[58,14],  attach:[38,128], z:0 },
-  thigh_f:{ img:'thigh_r',pivot:[42,14],  attach:[128,26], z:3, children:['shin_f'] },
-  shin_f: { img:'shin_r', pivot:[42,14],  attach:[84,128], z:2 },
-  torso:  { img:'torso',  pivot:[112,128],attach:[96,14],  z:6, children:['head','uarm_b','uarm_f'] },
-  head:   { img:'head',   pivot:[118,162],attach:[122,12], z:9 },
-  uarm_b: { img:'uarm_r', pivot:[40,14],  attach:[150,26], z:-2, children:['farm_b'] },
-  farm_b: { img:'farm_r', pivot:[20,10],  attach:[44,110], z:-3 },
-  uarm_f: { img:'uarm_l', pivot:[58,14],  attach:[95,30],  z:8, children:['farm_f'] },
-  farm_f: { img:'farm_l', pivot:[22,10],  attach:[30,108], z:7 },
+  pelvis: { pivot:[215,372], z:0, children:['torso','thigh_b','thigh_f'] },
+  torso:  { img:'torso',  pivot:[215,372], z:4, children:['head','uarm_f','arm_b'] },
+  head:   { img:'head',   pivot:[305,192], z:6 },
+  arm_b:  { img:'arm_b',  pivot:[358,282], z:-2 },
+  uarm_f: { img:'uarm_f', pivot:[246,262], z:5, children:['farm_f'] },
+  farm_f: { img:'farm_f', pivot:[262,316], z:5.5 },
+  thigh_b:{ img:'thigh_b',pivot:[180,378], z:1, children:['shin_b'] },
+  shin_b: { img:'shin_b', pivot:[126,506], z:0.5 },
+  thigh_f:{ img:'thigh_f',pivot:[250,384], z:3, children:['shin_f'] },
+  shin_f: { img:'shin_f', pivot:[290,508], z:2.5 },
 };
-
-// ---------- Poses / motions: return {bone: degrees}, plus root offset ----------
 const S = Math.sin, C = Math.cos, PI = Math.PI;
+const pos = x => Math.max(0,x);
 const MOVES = {
   'ท่าพัก (Rest)': t => ({}),
   'ยืน (Idle)': t => { const a=t*2.2; return {
-    root:[0, S(a*2)*2], hips:S(a)*1.5, torso:-3+S(a)*2.5, head:S(a+1)*5 + S(a*0.37)*3,
-    uarm_f:S(a)*6, farm_f:S(a+0.6)*6, uarm_b:S(a+0.4)*5, farm_b:S(a+1)*6,
-    thigh_f:2, shin_f:-2, thigh_b:-2, shin_b:2 }; },
+    root:[0, S(a*2)*2], torso:S(a)*2.5, head:S(a+1)*5 + S(a*0.37)*3,
+    uarm_f:S(a)*5, farm_f:S(a+0.6)*6, arm_b:S(a+0.4)*5,
+    thigh_f:S(a)*1, thigh_b:-S(a)*1 }; },
   'เดิน (Walk)': t => { const a=t*4.2; return {
-    root:[0, -Math.abs(S(a))*7], hips:S(a)*3, torso:-6+S(a*2)*2, head:S(a*2+0.5)*6-2,
-    thigh_f:10+S(a)*22, shin_f:Math.max(0,-C(a))*30-4, thigh_b:-10-S(a)*22, shin_b:Math.max(0,C(a))*30+4,
-    uarm_f:-S(a)*10-5, farm_f:-S(a)*8, uarm_b:S(a)*10-5, farm_b:S(a)*8 }; },
+    root:[0, -Math.abs(S(a))*6], pelvis:S(a)*2, torso:S(a*2)*2, head:S(a*2+0.5)*5,
+    thigh_f:4+S(a)*22, shin_f:pos(-C(a))*28, thigh_b:-12-S(a)*22, shin_b:pos(C(a))*28,
+    uarm_f:-S(a)*10, farm_f:-S(a)*8, arm_b:S(a)*10 }; },
   'วิ่ง (Run)': t => { const a=t*7.5; return {
-    root:[0, -Math.abs(S(a))*16+4], hips:S(a)*4-6, torso:-16+S(a*2)*3, head:S(a*2)*7+8,
-    thigh_f:8+S(a)*38, shin_f:Math.max(0,-C(a))*60+5, thigh_b:-14-S(a)*38, shin_b:Math.max(0,C(a))*60+5,
-    uarm_f:-S(a)*35-15, farm_f:-20-S(a)*15, uarm_b:S(a)*35-15, farm_b:-20+S(a)*15 }; },
-  'โจมตี (Attack)': t => { const p=(t*1.0)%1;
-    // 0-.45 raise arms overhead, .45-.6 slam down/forward, .6-1 recover
+    root:[0, -Math.abs(S(a))*14+4], pelvis:-6+S(a)*3, torso:-4+S(a*2)*3, head:S(a*2)*6+6,
+    thigh_f:S(a)*36, shin_f:pos(-C(a))*55, thigh_b:-14-S(a)*36, shin_b:pos(C(a))*55,
+    uarm_f:-S(a)*30-10, farm_f:-15-S(a)*15, arm_b:S(a)*28-10 }; },
+  'โจมตี (Attack)': t => { const p=t%1;
     const arm = p<.45 ? -150*easeInOut(p/.45) : p<.6 ? -150+150*easeOut((p-.45)/.15) : 0;
     const lean = p<.45 ? -easeInOut(p/.45) : p<.6 ? -1+2*easeOut((p-.45)/.15) : 1-easeInOut((p-.6)/.4);
-    return { root:[lean*10, 0], hips:lean*3, torso:lean*12, head:lean*8,
-      uarm_f:arm, farm_f:arm*0.15, uarm_b:arm*0.9, farm_b:arm*0.1,
-      thigh_f:lean*-6, shin_f:lean*4, thigh_b:lean*4, shin_b:2 }; },
+    return { root:[lean*10,0], pelvis:lean*3, torso:lean*10, head:lean*8,
+      uarm_f:arm*0.9, farm_f:arm*0.2, arm_b:arm,
+      thigh_f:-lean*6, shin_f:lean*4, thigh_b:lean*4 }; },
   'ล้ม (Fall)': t => { const T=t%3.4, p=Math.min(1,T/1.0), e=easeIn(p),
       b=p>=1 ? Math.abs(S((T-1)*9))*Math.exp(-(T-1)*5)*8 : 0, c=p>=1 ? S((T-1)*5)*Math.min(1,(T-1)*2) : 0;
-    return { root:[e*5, e*128 - b], rootRot:e*80, hips:0, torso:e*4, head:-e*55 + c*4,
-      uarm_f:-e*95 + c*18, farm_f:-e*5 - c*10, uarm_b:-e*85 - c*18, farm_b:-e*5 + c*10,
-      thigh_f:e*12, shin_f:e*30, thigh_b:e*25, shin_b:e*45 }; },
+    return { root:[e*10, e*150 - b], rootRot:e*78, torso:e*4, head:-e*55 + c*4,
+      uarm_f:-e*95 + c*18, farm_f:-e*5 - c*10, arm_b:-e*85 - c*18,
+      thigh_f:e*12, shin_f:e*30, thigh_b:-e*5, shin_b:e*45 }; },
 };
 function easeInOut(x){ return x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2; }
 function easeOut(x){ return 1-Math.pow(1-x,3); }
 function easeIn(x){ return x*x*x; }
 
-// ---------- Engine ----------
-const cv = document.getElementById('c'), ctx = cv.getContext('2d');
-const imgs = {}; const deg = Math.PI/180;
-const names = [...new Set(Object.values(RIG).map(b=>b.img))];
-Promise.all(names.map(n => new Promise(r => { const i=new Image(); i.onload=()=>r(); i.src=`parts/${n}.png`; imgs[n]=i; })))
-  .then(() => requestAnimationFrame(loop));
+const cv=document.getElementById('c'), ctx=cv.getContext('2d'); const imgs={};
+const names=Object.values(RIG).filter(b=>b.img).map(b=>b.img);
+Promise.all(names.map(n=>new Promise(r=>{const i=new Image(); i.onload=r; i.src=`parts/${n}.png`; imgs[n]=i;}))).then(()=>requestAnimationFrame(loop));
 
-for (const b of Object.values(RIG)) {
-  b.base = 0;
-  if (b.aim) { const [[x0,y0],[x1,y1],dir] = b.aim; b.base = dir - Math.atan2(y1-y0, x1-x0)/deg; }
-}
-// limbs keep their aim relative to the parent's world orientation, so cancel parent's base
-function baseOf(name, parent){ return RIG[name].base - (parent ? RIG[parent].base : 0); }
-
-let current = Object.keys(MOVES)[1], t0 = performance.now(), tAcc = 0, last = t0;
-const bar = document.getElementById('moves');
+let current=Object.keys(MOVES)[1], tAcc=0, last=performance.now();
+const bar=document.getElementById('moves');
 for (const k of Object.keys(MOVES)) {
-  const btn = document.createElement('button'); btn.textContent = k;
-  btn.onclick = () => { current = k; tAcc = 0; [...bar.children].forEach(c=>c.classList.toggle('on', c===btn)); };
+  const btn=document.createElement('button'); btn.textContent=k;
+  btn.onclick=()=>{ current=k; tAcc=0; [...bar.children].forEach(c=>c.classList.toggle('on',c===btn)); };
   if (k===current) btn.classList.add('on'); bar.appendChild(btn);
 }
-const speedEl = document.getElementById('speed'), bonesEl = document.getElementById('bones');
+const speedEl=document.getElementById('speed'), bonesEl=document.getElementById('bones');
 
-function collect(name, parent, m, pose, out) {
-  const b = RIG[name];
-  let M = m.translate(...(b.attach || [0,0]));
-  M = M.rotate((baseOf(name,parent) + (pose[name]||0)));
-  if (b.scale) M = M.scale(b.scale);
-  out.push({ b, M, joint:[M.e, M.f] });
-  const inner = M.translate(-b.pivot[0], -b.pivot[1]);
-  for (const c of (b.children||[])) collect(c, name, inner, pose, out);
+function collect(name, parentPivot, M, pose, out) {
+  const b=RIG[name];
+  M = M.translate(b.pivot[0]-parentPivot[0], b.pivot[1]-parentPivot[1]).rotate(pose[name]||0);
+  out.push({b, M});
+  for (const c of (b.children||[])) collect(c, b.pivot, M, pose, out);
 }
-
 function loop(now) {
-  const dt = (now - last)/1000; last = now; tAcc += dt * parseFloat(speedEl.value);
-  const pose = MOVES[current](tAcc);
-  ctx.clearRect(0,0,cv.width,cv.height);
-  // ground shadow
-  ctx.fillStyle='rgba(0,0,0,.35)'; ctx.beginPath(); ctx.ellipse(350,470,150,16,0,0,PI*2); ctx.fill();
-  const [rx, ry] = pose.root || [0,0];
-  let M = new DOMMatrix().translate(330+rx, 262+ry).rotate(pose.rootRot||0).scale(0.82);
-  const out = []; collect('hips', null, M, pose, out);
+  const dt=(now-last)/1000; last=now; tAcc+=dt*parseFloat(speedEl.value);
+  const pose=MOVES[current](tAcc);
+  ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,cv.width,cv.height);
+  ctx.fillStyle='rgba(0,0,0,.35)'; ctx.beginPath(); ctx.ellipse(330,474,150,15,0,0,PI*2); ctx.fill();
+  const [rx,ry]=pose.root||[0,0], k=0.7;
+  const M0=new DOMMatrix().translate(300+rx, 296+ry).rotate(pose.rootRot||0).scale(k);
+  const out=[]; collect('pelvis', RIG.pelvis.pivot, M0.translate(0,0), pose, out);
+  // the first translate in collect is zero for the root
   out.sort((a,b)=>a.b.z-b.b.z);
-  for (const {b, M} of out) {
-    ctx.setTransform(M); ctx.drawImage(imgs[b.img], -b.pivot[0], -b.pivot[1]);
+  for (const {b,M} of out) if (b.img) {
+    ctx.setTransform(M); const o=OFF[b.img];
+    ctx.drawImage(imgs[b.img], o[0]-b.pivot[0], o[1]-b.pivot[1]);
   }
   ctx.setTransform(1,0,0,1,0,0);
-  if (bonesEl.checked) {
-    ctx.fillStyle='#ff3b3b';
-    for (const o of out) { ctx.beginPath(); ctx.arc(o.joint[0], o.joint[1], 4, 0, PI*2); ctx.fill(); }
-  }
+  if (bonesEl.checked) { ctx.fillStyle='#ff3b3b';
+    for (const {M} of out) { ctx.beginPath(); ctx.arc(M.e,M.f,4,0,PI*2); ctx.fill(); } }
   requestAnimationFrame(loop);
 }
 </script>
