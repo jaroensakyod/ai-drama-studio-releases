@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Xiao Mu &amp; Xiao Mi</title>
+<style>
+  :root {
+    --bg: #f4f8fb; --panel: #ffffff; --ink: #1d3557; --muted: #5b6b80; --line: #d9e3ec;
+    --accent: #1f9bc4; --accent-ink: #ffffff; --stage-a: #e9f6fb; --stage-b: #fdeff0;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #12171d; --panel: #1a2129; --ink: #e8eef5; --muted: #9aa8b8; --line: #2a3440;
+      --accent: #3bb6de; --accent-ink: #0b1218; --stage-a: #1b2a33; --stage-b: #2c1f24;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #12171d; --panel: #1a2129; --ink: #e8eef5; --muted: #9aa8b8; --line: #2a3440;
+    --accent: #3bb6de; --accent-ink: #0b1218; --stage-a: #1b2a33; --stage-b: #2c1f24;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font-family: system-ui, "Noto Sans Thai", sans-serif; }
+  main { max-width: 860px; margin: 0 auto; padding: 20px 16px 32px; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  p.sub { margin: 0 0 14px; color: var(--muted); font-size: 14px; }
+  canvas { width: 100%; height: auto; display: block; border-radius: 16px;
+           background: linear-gradient(90deg, var(--stage-a), var(--stage-b)); border: 1px solid var(--line); }
+  .bar { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; margin-top: 14px; }
+  button { background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 999px;
+           padding: 9px 16px; font-size: 14px; font-weight: 600; cursor: pointer; }
+  label { color: var(--muted); font-size: 14px; display: flex; align-items: center; gap: 8px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>เสี่ยวมู่ &amp; เสี่ยวมี่ ท่าสวัสดีทักทาย</h1>
+  <p class="sub">ตัดชิ้นส่วน (หัว, ตัว, แขนที่โบก) จากภาพ Master Illustration แล้วทำแอนิเมชันด้วย Canvas</p>
+  <canvas id="c" width="840" height="560"></canvas>
+  <div class="bar">
+    <button id="again">ทักทายอีกครั้ง 👋</button>
+    <label>ความเร็ว <input id="speed" type="range" min="0.4" max="1.8" step="0.05" value="1"></label>
+    <label><input id="loop" type="checkbox" checked> วนซ้ำ</label>
+  </div>
+</main>
+<script>
+// Each character: parts cut from the master illustration, all sharing one coordinate space.
+const CHARS = [
+  { key:'mu', x:40,  phase:0.0, text:'สวัสดีครับ!', bubble:'#1f9bc4',
+    off:{arm:[10,238], body:[73,236], head:[19,3]}, shoulder:[80,296], neck:[185,268], feet:[185,432],
+    eyes:[[127,193],[213,190]], eyeR:[13,17], skin:'#fde5ce' },
+  { key:'mi', x:440, phase:0.35, text:'สวัสดีค่ะ!', bubble:'#e2627a',
+    off:{arm:[10,218], body:[67,222], head:[29,13]}, shoulder:[100,276], neck:[175,256], feet:[180,434],
+    eyes:[[131,187],[212,187]], eyeR:[13,16], skin:'#fde0cb' },
+];
+const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+const imgs = {};
+const load = src => new Promise(r => { const i = new Image(); i.onload = () => r(i); i.src = src; });
+Promise.all(CHARS.flatMap(c => ['arm','body','head'].map(p =>
+  load(`parts/${c.key}_${p}.png`).then(i => imgs[`${c.key}_${p}`] = i)))).then(() => requestAnimationFrame(loop));
+
+const ease = x => x<.5 ? 2*x*x : 1-Math.pow(-2*x+2,2)/2;
+const CYCLE = 3.6, WAVE = 2.4;           // seconds: wave for 2.4s, then rest
+let t = 0, last = performance.now();
+document.getElementById('again').onclick = () => { t = 0; };
+const speedEl = document.getElementById('speed'), loopEl = document.getElementById('loop');
+
+function pose(c, tt) {
+  // envelope: arm rises into the wave, then settles
+  const lt = loopEl.checked ? ((tt - c.phase) % CYCLE + CYCLE) % CYCLE : Math.max(0, tt - c.phase);
+  const on = lt < WAVE ? Math.min(1, lt/0.35) * Math.min(1, (WAVE-lt)/0.4) : 0;
+  const wave = Math.sin(lt * 2*Math.PI * 2.2);            // ~2.2 waves per second
+  const breathe = Math.sin(tt * 2.4 + c.phase*5);
+  return {
+    arm: -on*18 + on*wave*16 + (1-on)*breathe*2,          // degrees around the shoulder
+    head: on*(5 + wave*2.5) + (1-on)*breathe*1.5,         // friendly tilt toward the waving side... and a small nod
+    nod: on * Math.max(0, Math.sin(lt*2*Math.PI*1.1)) * 3,
+    bounce: Math.abs(Math.sin(tt*4.4 + c.phase*3)) * (2 + on*3),
+    squash: 1 + breathe*0.012,
+    bubble: lt < WAVE ? ease(Math.min(1, lt/0.3)) * Math.min(1,(WAVE-lt)/0.25) : 0,
+    blink: blinkAmt(tt + c.phase*7),
+  };
+}
+function blinkAmt(tt) { const p = tt % 3.1; return p < 0.08 ? p/0.08 : p < 0.16 ? 1-(p-0.08)/0.08 : 0; }
+
+function drawPart(c, part) { const o = c.off[part]; ctx.drawImage(imgs[`${c.key}_${part}`], o[0], o[1]); }
+
+function drawChar(c, P) {
+  const [fx, fy] = c.feet;
+  ctx.save();
+  ctx.translate(c.x, 90);
+  // ground shadow
+  ctx.fillStyle = 'rgba(0,0,0,.12)';
+  ctx.beginPath(); ctx.ellipse(fx, fy+4, 110 - P.bounce*2, 12, 0, 0, Math.PI*2); ctx.fill();
+  // whole body: bounce + slight squash from the feet
+  ctx.translate(fx, fy - P.bounce); ctx.scale(1/P.squash, P.squash); ctx.translate(-fx, -fy);
+  // waving arm (behind the body)
+  ctx.save(); ctx.translate(...c.shoulder); ctx.rotate(P.arm*Math.PI/180); ctx.translate(-c.shoulder[0], -c.shoulder[1]);
+  drawPart(c, 'arm'); ctx.restore();
+  drawPart(c, 'body');
+  // head: tilt around the neck, plus a small nod
+  ctx.save(); ctx.translate(c.neck[0], c.neck[1] + P.nod); ctx.rotate(-P.head*Math.PI/180); ctx.translate(-c.neck[0], -c.neck[1]);
+  drawPart(c, 'head');
+  if (P.blink > 0) for (const [ex, ey] of c.eyes) {
+    const [rx, ry] = c.eyeR;
+    ctx.fillStyle = c.skin; ctx.beginPath();
+    ctx.ellipse(ex, ey - ry*(1-P.blink)*0.0, rx, ry*P.blink + 1, 0, 0, Math.PI*2); ctx.fill();
+    if (P.blink > 0.6) { ctx.strokeStyle = '#2b2221'; ctx.lineWidth = 3; ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.arc(ex, ey - 4, rx*0.9, 0.2*Math.PI, 0.8*Math.PI); ctx.stroke(); }
+  }
+  ctx.restore();
+  ctx.restore();
+  // speech bubble
+  if (P.bubble > 0.01) {
+    const s = P.bubble, bx = c.x + 285, by = 50;
+    ctx.save(); ctx.globalAlpha = Math.min(1, s*1.2); ctx.translate(bx, by); ctx.scale(0.6+0.4*s, 0.6+0.4*s);
+    ctx.font = '600 22px system-ui, "Noto Sans Thai", sans-serif';
+    const w = ctx.measureText(c.text).width + 30, h = 44;
+    ctx.fillStyle = '#ffffff'; ctx.strokeStyle = c.bubble; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.roundRect(-w/2, -h/2, w, h, 22); ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(-w/2+26, h/2-2); ctx.lineTo(-w/2+14, h/2+14); ctx.lineTo(-w/2+42, h/2-2); ctx.closePath();
+    ctx.fill(); ctx.stroke(); ctx.fillStyle = '#ffffff'; ctx.fillRect(-w/2+24, h/2-5, 20, 5);
+    ctx.fillStyle = c.bubble; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(c.text, 0, 1);
+    ctx.restore();
+  }
+}
+
+function loop(now) {
+  const dt = Math.min(0.05, (now - last)/1000); last = now; t += dt * parseFloat(speedEl.value);
+  ctx.clearRect(0, 0, cv.width, cv.height);
+  for (const c of CHARS) drawChar(c, pose(c, t));
+  requestAnimationFrame(loop);
+}
+</script>
+</body>
+</html>
